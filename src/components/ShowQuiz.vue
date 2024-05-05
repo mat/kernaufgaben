@@ -7,7 +7,7 @@
       <button @click="submitAnswer">Submit</button>
     </div>
     <div v-if="quizFinished">
-      <p>Deine Punkte: {{ score }} / 10</p>
+      <p>Deine Punkte: {{ score }} / 10. Glückwunsch!</p>
     </div>
   </div>
 </template>
