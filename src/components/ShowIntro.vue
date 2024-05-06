@@ -1,7 +1,6 @@
 <template>
     <div>
-      <h1>Kernaufgaben</h1>
-      <p>Das sind die Kernaufgaben...</p>
+      <h1>Kernaufgaben üben</h1>
     </div>
   </template>
 
