@@ -63,6 +63,7 @@ export default {
       this.quizFinished = false;
       this.score = 0;
       this.questionIndex = 0;
+      this.results = []; // Clear the results array
       this.questions = this.generateQuestions(MULTIPLICATION_GROUPS_TEXT);
       this.startQuiz();
     },
