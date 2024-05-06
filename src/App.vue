@@ -1,12 +1,11 @@
 <template>
   <div>
     <div class="logo-container">
-      <img src="/logo-512x512.png" alt="Logo" class="logo">
+      <img :src="logoUrl" alt="Logo" class="logo">
     </div>
     <ShowIntro />
     <ShowQuiz />
   </div>
-
 </template>
 
 <script>
@@ -18,6 +17,11 @@ export default {
   components: {
     ShowIntro,
     ShowQuiz
+  },
+  computed: {
+    logoUrl() {
+      return process.env.BASE_URL + 'logo-512x512.png';
+    }
   }
 }
 </script>
