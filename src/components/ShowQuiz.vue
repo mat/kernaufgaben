@@ -13,7 +13,7 @@
       <p>Deine Punkte: {{ score }} / 10</p>
       <ul>
         <li v-for="(result, index) in results" :key="index"
-            :class="{ correct: result.correctAnswer === parseInt(result.userAnswer) }">
+          :class="{ correct: result.correctAnswer === parseInt(result.userAnswer) }">
           {{ result.question }} = {{ result.correctAnswer }} (Deine Antwort: {{ result.userAnswer }})
         </li>
       </ul>
@@ -169,11 +169,13 @@ export default {
 }
 
 ul {
-  list-style-type: none; /* Remove bullet points */
+  list-style-type: none;
+  /* Remove bullet points */
   padding: 0;
 }
 
 li.correct {
-  color: green; /* Highlight correct answers */
+  color: green;
+  /* Highlight correct answers */
 }
 </style>

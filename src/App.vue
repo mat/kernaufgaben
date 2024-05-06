@@ -37,8 +37,11 @@ export default {
 }
 
 .logo {
-  width: 15vw; /* Adjust as needed */
-  height: 15vw; /* Adjust as needed */
-  margin-top: 2vw; /* Adjust as needed */
+  width: 15vw;
+  /* Adjust as needed */
+  height: 15vw;
+  /* Adjust as needed */
+  margin-top: 2vw;
+  /* Adjust as needed */
 }
 </style>
