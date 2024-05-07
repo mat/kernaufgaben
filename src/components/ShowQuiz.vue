@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-if="quizStarted && !quizFinished">
+  <div class="quiz-container">
+    <div v-if="quizStarted && !quizFinished" class="quiz-content">
       <p class="progress-text">{{ progressText }}</p>
       <p class="question-text">{{ currentQuestion }}</p>
       <form @submit.prevent="submitAnswer">
@@ -8,9 +8,9 @@
         <button type="submit">weiter</button>
       </form>
     </div>
-    <div v-if="quizFinished">
+    <div v-if="quizFinished" class="quiz-content">
       <p class="progress-text">{{ progressText }}</p>
-      <p class="score-text">Deine Punkte: {{ score }} von 10</p>
+      <p class="score-text">Punkte: {{ score }} von 10</p>
       <ul>
         <li v-for="(result, index) in results" :key="index"
           :class="{ correct: result.correctAnswer === parseInt(result.userAnswer) }">
@@ -187,5 +187,18 @@ li.correct {
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+.quiz-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Change to space-between */
+  align-items: center;
+  height: 30vh; /* Set to the height of the viewport */
+  padding: 10px; /* Add some padding */
+}
+
+.quiz-content {
+  max-width: 90%; /* Adjust as needed */
+  text-align: center; /* Center the text */
 }
 </style>

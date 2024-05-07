@@ -33,15 +33,15 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 30px;
 }
 
 .logo {
-  width: 15vw;
+  width: 11vw;
   /* Adjust as needed */
-  height: 15vw;
+  height: 11vw;
   /* Adjust as needed */
-  margin-top: 2vw;
+  margin-top: 1vw;
   /* Adjust as needed */
 }
 </style>
