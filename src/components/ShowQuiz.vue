@@ -10,7 +10,7 @@
     </div>
     <div v-if="quizFinished">
       <p class="progress-text">{{ progressText }}</p>
-      <p>Deine Punkte: {{ score }} / 10</p>
+      <p class="score-text">Deine Punkte: {{ score }} von 10</p>
       <ul>
         <li v-for="(result, index) in results" :key="index"
           :class="{ correct: result.correctAnswer === parseInt(result.userAnswer) }">
@@ -177,5 +177,15 @@ ul {
 li.correct {
   color: green;
   /* Highlight correct answers */
+}
+
+.score-text {
+  font-size: 2em; /* Adjust as needed */
+  animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 </style>
