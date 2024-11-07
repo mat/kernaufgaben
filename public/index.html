@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kernaufgaben üben</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="logo-512x512.png">
+
+    <meta name="description" content="Kostenlos Kernaufgaben online üben">
+    <meta property="og:title" content="Kernaufgaben üben">
+    <meta property="og:description" content="Kostenlos Kernaufgaben der Multiplikation online üben">
+    <meta property="og:image" content="/logo-512x512.png">
+    <meta property="og:url" content="https://mat.github.io/kernaufgaben/">
+
+    <style>
+      #logo {
+        display: block;
+        margin: 20px auto; /* Center horizontally with margin */
+        width: 100px; /* Set desired logo width */
+        height: 100px; /* Set desired logo height */
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        margin: 0;
+        background-color: #f5f5f5;
+      }
+      h1 {
+        font-size: 2em;
+        color: #333;
+      }
+      .problem-container {
+        text-align: center;
+        margin-top: 20px;
+      }
+      .problem-text {
+        font-size: 1.5em;
+        color: #333;
+        margin: 10px 0;
+      }
+      .math-problem {
+        font-size: 2em;
+        color: #333;
+        margin: 10px 0;
+      }
+      .answer-input {
+        font-size: 1em;
+        padding: 8px;
+        width: 100px;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .submit-button {
+        padding: 10px 20px;
+        font-size: 1em;
+        cursor: pointer;
+        border: none;
+        background-color: #4caf50;
+        color: white;
+        border-radius: 5px;
+      }
+
+      /* Remove spinner buttons */
+      input[type="number"]::-webkit-outer-spin-button,
+      input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      input[type="number"] {
+        -moz-appearance: textfield; /* Firefox */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Logo Image -->
+    <img src="logo-512x512.png" alt="Bee" id="logo" />
+
+    <h1>Kernaufgaben üben</h1>
+    <div class="problem-container">
+      <div class="problem-text" id="problem-text">Aufgabe 1 von 10</div>
+      <div class="math-problem" id="math-problem">5 × 2 = ?</div>
+      <input
+        type="number"
+        id="answer"
+        class="answer-input"
+        placeholder="Antwort"
+      />
+      <button class="submit-button" onclick="checkAnswer()">weiter</button>
+    </div>
+
+    <div id="results-container" style="display: none">
+      <h2>Ergebnisse</h2>
+      <div id="results"></div>
+      <button class="submit-button" onclick="startNewRound()">
+        Neue Runde
+      </button>
+    </div>
+
+    <script src="exercises.js"></script>
+
+    <script>
+      function parseExercises(text) {
+        const exercises = [];
+        const lines = text.trim().split("\n");
+
+        lines.forEach((line) => {
+          const match = line.match(/(\d+)\s*x\s*(\d+)\s*=\s*(\d+)/);
+          if (match) {
+            const num1 = parseInt(match[1]);
+            const num2 = parseInt(match[2]);
+            const answer = parseInt(match[3]);
+            exercises.push({ num1, num2, operator: "×", answer });
+          }
+        });
+
+        return exercises;
+      }
+
+      function getRandomExercises(exercises, count) {
+        const shuffled = exercises.sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, count);
+      }
+
+      const allExercises = parseExercises(MULTIPLICATION_GROUPS_TEXT);
+      let problems = getRandomExercises(allExercises, 10);
+      console.log("Length of problems: ");
+      console.log(problems.length);
+      console.log(problems);
+      let userAnswers = [];
+
+      let currentProblem = 0;
+
+      function displayProblem() {
+        const problem = problems[currentProblem];
+        document.getElementById("problem-text").textContent = `Aufgabe ${
+          currentProblem + 1
+        } von 10`;
+        document.getElementById(
+          "math-problem"
+        ).textContent = `${problem.num1} · ${problem.num2} = ?`;
+        document.getElementById("answer").value = "";
+      }
+
+      function checkAnswer() {
+        const userAnswer = parseInt(document.getElementById("answer").value);
+        if (isNaN(userAnswer)) {
+          return;
+        }
+        const correctAnswer = problems[currentProblem].answer;
+
+        userAnswers.push({
+          problem: `${problems[currentProblem].num1} · ${problems[currentProblem].num2} = ${correctAnswer}`,
+          userAnswer: userAnswer,
+          isCorrect: userAnswer === correctAnswer,
+        });
+
+        currentProblem++;
+        if (currentProblem < problems.length) {
+          displayProblem();
+        } else {
+          displayResults();
+        }
+
+        // Set focus back to the answer input
+        document.getElementById("answer").focus();
+      }
+
+      function displayResults() {
+        const resultsContainer = document.getElementById("results-container");
+        const resultsDiv = document.getElementById("results");
+        resultsDiv.innerHTML = "";
+
+        userAnswers.forEach((answer) => {
+          const resultItem = document.createElement("div");
+          if (answer.isCorrect) {
+            resultItem.style.color = "green";
+          }
+          resultItem.textContent = `${answer.problem} (Deine Antwort: ${
+            answer.userAnswer
+          }) ${answer.isCorrect ? "✔️" : ""}`;
+          resultsDiv.appendChild(resultItem);
+        });
+
+        resultsContainer.style.display = "block";
+        document.querySelector(".problem-container").style.display = "none";
+      }
+
+      function startNewRound() {
+        currentProblem = 0;
+        userAnswers = [];
+        problems = getRandomExercises(allExercises, 10); // Get new set of problems
+        displayProblem();
+        document.getElementById("results-container").style.display = "none";
+        document.querySelector(".problem-container").style.display = "block";
+      }
+
+      document
+        .getElementById("answer")
+        .addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            checkAnswer();
+          }
+        });
+
+      displayProblem();
+    </script>
+  </body>
+</html>
